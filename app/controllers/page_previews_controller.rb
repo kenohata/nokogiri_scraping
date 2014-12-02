@@ -11,6 +11,8 @@ class PagePreviewsController < ApplicationController
         el.attr('content')
       elsif el = html.at_css('meta[property="og:title"]')
         el.attr('content')
+      elsif el = html.at_css('meta[name="twitter:title"]')
+        el.attr('content')
       elsif el = html.at_css("title")
         el.text
       end
@@ -18,6 +20,8 @@ class PagePreviewsController < ApplicationController
       url = if el = html.at_css('meta[property="og:url"]')
         el.attr('content')
       elsif el = html.at_css('meta[property="og:url"]')
+        el.attr('content')
+      elsif el = html.at_css('meta[name="twitter:url"]')
         el.attr('content')
       else
         uri.to_s
@@ -27,11 +31,15 @@ class PagePreviewsController < ApplicationController
         el.attr('content')
       elsif el = html.at_css('meta[property="og:image"]')
         el.attr('content')
+      elsif el = html.at_css('meta[name="twitter:image"]')
+        el.attr('content')
       end
 
       description = if el = html.at_css('meta[property="og:description"]')
         el.attr('content')
       elsif el = html.at_css('meta[property="og:description"]')
+        el.attr('content')
+      elsif el = html.at_css('meta[name="twitter:description"]')
         el.attr('content')
       elsif el = html.at_css('meta[name="description"]')
         el.attr('content')
