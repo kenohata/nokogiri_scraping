@@ -29,10 +29,19 @@ class PagePreviewsController < ApplicationController
         el.attr('content')
       end
 
+      description = if el = html.at_css('meta[property="og:description"]')
+        el.attr('content')
+      elsif el = html.at_css('meta[property="og:description"]')
+        el.attr('content')
+      elsif el = html.at_css('meta[name="description"]')
+        el.attr('content')
+      end
+
       json = {
         title: title,
         url: url,
         image: image,
+        description: description,
       }
 
       render json: json
