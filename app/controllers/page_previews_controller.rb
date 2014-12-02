@@ -7,11 +7,21 @@ class PagePreviewsController < ApplicationController
       file = open uri
       html = Nokogiri::HTML(file)
 
-      title = if el = html.at_css("title")
+      title = if el = html.at_css('meta[name="og:title"]')
+        el.attr('content')
+      elsif el = html.at_css('meta[property="og:title"]')
+        el.attr('content')
+      elsif el = html.at_css("title")
         el.text
       end
 
-      url = uri.to_s
+      url = if el = html.at_css('meta[property="og:url"]')
+        el.attr('content')
+      elsif el = html.at_css('meta[property="og:url"]')
+        el.attr('content')
+      else
+        uri.to_s
+      end
 
       json = {
         title: title,
