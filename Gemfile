@@ -29,6 +29,7 @@ gem 'spring',        group: :development
 gem 'sorcery'
 gem 'haml-rails'
 gem 'bootstrap-sass'
+gem 'nokogiri'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
