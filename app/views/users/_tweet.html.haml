@@ -9,7 +9,13 @@
     .clear
   .tweet-content
     %p
-      = t.content
+      = sanitize url_to_anchor(t.content), tags: %w(a), attributes: %w(href target)
+    - if t.url.present?
+      .content-footer
+        = link_to t.url, target: "_blank" do
+          %h3= t.title
+          %p= t.description
+          = image_tag t.image if t.image
     .content-footer
       - if t.favorited_by? current_user
         = link_to "お気に入りの解除", tweet_favorites_path(t), method: :delete
