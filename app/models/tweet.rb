@@ -4,10 +4,10 @@ class Tweet < ActiveRecord::Base
 
   validates :user, presence: true
   validates :content, presence: true, length: { in: 1..140 }
-  validates :title, length: { in: 0..255 }
-  validates :url, length: { in: 0..65535 }
-  validates :image, length: { in: 0..65535 }
-  validates :description, length: { in: 0..65535 }
+  validates :title, allow_blank: true, length: { in: 0..255 }
+  validates :url, allow_blank: true, length: { in: 0..65535 }
+  validates :image, allow_blank: true, length: { in: 0..65535 }
+  validates :description, allow_blank: true, length: { in: 0..65535 }
 
   default_scope -> { order(created_at: :desc) }
 
