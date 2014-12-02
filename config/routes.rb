@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     get :timeline, on: :collection
   end
 
+  resource :page_previews, only: [:create]
+
   root to: 'registrations#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
