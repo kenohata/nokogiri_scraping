@@ -28,4 +28,50 @@
       = form_for @tweet do |f|
         .form-group
           = f.text_area :content, class: "form-control"
+        #page_preview
         = f.submit "つぶやく", class: "btn btn-success"
+
+:coffeescript
+  $ ->
+    $form    = $('#new_tweet')
+    $content = $form.find('#tweet_content')
+    $preview = $form.find('#page_preview')
+    lastURL  = null
+    state    = "before"
+    data     = {}
+
+    updatePreview = ->
+      if state == "syncing"
+        temp  = "通信中..."
+        $preview.html temp
+      else if state == "synced"
+        temp  = "<a href='" + data.url + "' target='_blank'>"
+        temp += data.title
+        temp += "</a>"
+
+        $preview.html temp
+
+    sync = (url) ->
+      if state == "before"
+        state = "syncing"
+        updatePreview()
+        $.ajax
+          type: 'POST'
+          url:  '/page_previews'
+          data: { page_preview: { url: url } }
+          success: (d, type) ->
+            state = "synced"
+            data  = d
+            updatePreview()
+          error: (xhr, status, error) ->
+          state = "synced"
+
+    callback = ->
+      val  = $content.val()
+      list = val.match /(https?:)\/\/\S+/
+
+      if list?
+        lastURL = list[0]
+        sync(lastURL)
+
+    $content.keyup callback
