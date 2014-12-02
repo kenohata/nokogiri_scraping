@@ -23,9 +23,16 @@ class PagePreviewsController < ApplicationController
         uri.to_s
       end
 
+      image = if el = html.at_css('meta[property="og:image"]')
+        el.attr('content')
+      elsif el = html.at_css('meta[property="og:image"]')
+        el.attr('content')
+      end
+
       json = {
         title: title,
         url: url,
+        image: image,
       }
 
       render json: json
