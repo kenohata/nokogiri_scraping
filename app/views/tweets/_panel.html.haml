@@ -28,6 +28,10 @@
       = form_for @tweet do |f|
         .form-group
           = f.text_area :content, class: "form-control"
+        = f.hidden_field :title
+        = f.hidden_field :url
+        = f.hidden_field :image
+        = f.hidden_field :description
         #page_preview
         = f.submit "つぶやく", class: "btn btn-success"
 
@@ -53,6 +57,12 @@
 
         $preview.html temp
 
+    updateHidens = ->
+      $form.find('#tweet_title').val data.title
+      $form.find('#tweet_url').val data.url
+      $form.find('#tweet_image').val data.image
+      $form.find('#tweet_description').val data.description
+
     sync = (url) ->
       if state == "before"
         state = "syncing"
@@ -65,6 +75,7 @@
             state = "synced"
             data  = d
             updatePreview()
+            updateHidens()
           error: (xhr, status, error) ->
           state = "synced"
 
