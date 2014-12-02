@@ -7,9 +7,15 @@ class PagePreviewsController < ApplicationController
       file = open uri
       html = Nokogiri::HTML(file)
 
+      title = if el = html.at_css("title")
+        el.text
+      end
+
+      url = uri.to_s
+
       json = {
-        title: html.at_css("title").text,
-        url:   uri.to_s
+        title: title,
+        url: url,
       }
 
       render json: json
